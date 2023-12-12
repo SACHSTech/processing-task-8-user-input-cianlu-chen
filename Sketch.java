@@ -27,16 +27,62 @@ public class Sketch extends PApplet {
   }
 
   public void draw() {
+    int frostingColour = readColour();
+
+    stroke(255);
+    fill(200, 250, 250);
+    rect(10, 10, 40, 40);
+
+    fill(250, 200, 250);
+    rect(60, 10, 40, 40);
+
+    fill(250, 250, 200);
+    rect(110, 10, 40, 40);
+
     if(mousePressed){
       noStroke();
-      fill(200, 250, 250);
+      fill(frostingColour);
       ellipse(mouseX, mouseY, 20, 20);
     }
   }
 
+  public void blueFrost(){
+    if(mouseX >= 160 || mouseY >= 60){
+      if(mousePressed){
+        noStroke();
+        fill(200, 250, 250);
+        ellipse(mouseX, mouseY, 20, 20);
+      }
+    }
+  }
+
+  public void redFrost(){
+    if(mouseX >= 160 || mouseY >= 60){
+      if(mousePressed){
+        noStroke();
+        fill(250, 200, 250);
+        ellipse(mouseX, mouseY, 20, 20);
+      }
+    }
+  }
+
+  public void yellowFrost(){
+    if(mouseX >= 160 || mouseY >= 60){
+      if(mousePressed){
+        noStroke();
+        fill(250, 250, 200);
+        ellipse(mouseX, mouseY, 20, 20);
+      }
+    }
+  }
+
   public void mouseClicked(){
-    if(true){
+    if(mouseX >= 160 || mouseY >= 60){
       image(imgCream, mouseX - 25, mouseY - 25);
     }
+  }
+
+  public int readColour(){
+    return get(mouseX, mouseY);
   }
 }
