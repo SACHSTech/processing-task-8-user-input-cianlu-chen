@@ -28,6 +28,7 @@ public class Sketch extends PApplet {
   }
 
   public void setup() {
+    // Load and resize images
     imgBackground = loadImage("background.jpg");
     imgBackground.resize(750, 750);
 
@@ -52,7 +53,7 @@ public class Sketch extends PApplet {
   }
 
   public void draw() {
-    // 'Snake'
+    // Calls the 'snake' function
     moley(moleyX, moleyY);
 
     // Frosting menu
