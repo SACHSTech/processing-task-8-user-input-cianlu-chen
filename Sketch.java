@@ -8,7 +8,9 @@ public class Sketch extends PApplet {
   PImage imgCream;
   PImage imgStrawberry;
   PImage imgCandle;
+  PImage imgSmallCandle;
 
+  // Variables
   boolean upPressed = false;
   boolean downPressed = false;
   boolean leftPressed = false;
@@ -41,15 +43,19 @@ public class Sketch extends PApplet {
     imgCandle = loadImage("candle.png");
     imgCandle.resize(100, 100);
 
+    imgSmallCandle = loadImage("smaller candle.png");
+    imgSmallCandle.resize(50, 50);
+
+    // Draws background and cake
     image(imgBackground, 0, 0);
     image(imgCake, 175, 145);
-
-    textSize(100);
   }
 
   public void draw() {
+    // 'Snake'
     moley(moleyX, moleyY);
 
+    // Frosting menu
     stroke(255);
     fill(200, 250, 250);
     rect(10, 10, 40, 40);
@@ -66,22 +72,45 @@ public class Sketch extends PApplet {
     fill(230, 200, 250);
     rect(210, 10, 40, 40);
 
-    // 'Snake' movement
-    if(upPressed){
-      moleyY--;
+    textSize(50);
+    fill(150);
+    text("1", 17, 47);
+    text("2", 67, 47);
+    text("3", 117, 47);
+    text("4", 167, 47);
+    text("5", 217, 47);
+
+    // Topping menu
+    if(topOption == 0){
+      fill(214, 75, 75);
+      rect(60, 70, 50, 50);
+      rect(115, 70, 30, 50);
+
+      fill(127, 245, 194);
+      rect(5, 70, 50, 50);
     }
 
-    if(downPressed){
-      moleyY++;
+    else if(topOption == 1){
+      fill(214, 75, 75);
+      rect(5, 70, 50, 50);
+      rect(115, 70, 30, 50);
+
+      fill(127, 245, 194);
+      rect(60, 70, 50, 50);
     }
 
-    if(leftPressed){
-      moleyX--;
+    else if(topOption == 2){
+      fill(214, 75, 75);
+      rect(5, 70, 50, 50);
+      rect(60, 70, 50, 50);
+
+      fill(127, 245, 194);
+      rect(115, 70, 30, 50);
     }
 
-    if(rightPressed){
-      moleyX++;
-    }
+    image(imgCream, 5, 70);
+    image(imgStrawberry, 60, 70);
+    image(imgSmallCandle, 105, 70);
 
     // Frosting colour selection
     if(keyPressed){
@@ -105,24 +134,53 @@ public class Sketch extends PApplet {
         purpleFrost();
       }
 
+      // Clears the screen
       else if(key == BACKSPACE){
         image(imgBackground, 0, 0);
         image(imgCake, 175, 145);
       }
-
-      else if(key == ' '){
+      
+      // Changes topping
+      else if(keyCode == ALT){
         topOption++;
+        try {
+          Thread.sleep(100);
+        } 
+        
+        catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+
         if(topOption == 3){
           topOption = 0;
         }
       }
 
+      // 'Snake' movement
+      if(upPressed){
+        moleyY--;
+      }
+
+      if(downPressed){
+        moleyY++;
+      }
+
+      if(leftPressed){
+        moleyX--;
+      }
+
+      if(rightPressed){
+        moleyX++;
+      }
+
       // Text
       fill(255);
-      text(strUser, 0, 700);
+      textSize(80);
+      text(strUser, 0, 720);
     }
   }
 
+  // Colour of frosting
   public void blueFrost(){
     if(mouseX >= 270 || mouseY >= 70){
       if(mousePressed){
@@ -176,7 +234,6 @@ public class Sketch extends PApplet {
   // When the mouse is clicked, toppings get placed on the cake
   public void mouseClicked(){
     int currentChoice = topOption;
-    System.out.println(currentChoice);
 
     if(mouseX >= 270 || mouseY >= 70){
       if(currentChoice == 0){
@@ -188,12 +245,12 @@ public class Sketch extends PApplet {
       }
 
       else if(currentChoice == 2){
-        image(imgCandle, mouseX - 50, mouseY - 75);
+        image(imgCandle, mouseX - 50, mouseY - 95);
       }
     }
   }
 
-  // Controls the movement of the 'snake'
+  // True or false for 'snake' movement
   public void keyPressed(){
     if(key == 'w'){
       upPressed = true;
@@ -230,7 +287,12 @@ public class Sketch extends PApplet {
     }
   }
 
-  // Draws the 'snake'
+  /**
+   * @author L. Chen
+   * Draws the 'snake'
+   * @param moleyXValue the X value of the moley
+   * @param moleyYValue the Y value of the moley
+   */
   public void moley(int moleyXValue, int moleyYValue){
     stroke(0, 0, 0);
     fill(0, 0, 0);
@@ -251,7 +313,10 @@ public class Sketch extends PApplet {
     ellipse(55 + moleyXValue, 46 + moleyYValue, 15, 5); 
   }
 
+  // User message
   public void keyTyped(){
-    strUser += key;
+    if(key != BACKSPACE){
+      strUser += key;
+    }
   }
 }
